@@ -4,14 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+     <script src="https://code.jquery.com/jquery-3.3.1.js"  crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.css">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.js"  crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.js"  crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.js"  crossorigin="anonymous"></script>
 
     <title>Document</title>
 </head>
 <body>
-    <h3>hello there</h3>
+  <!--
+    <h3 class="text-center">hello there</h3>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-0 col-md-4"></div>
+            <div class="col-sm-12 col-md-4">
+                <form  action="/register" method="POST">
+  <div class="form-group">
+    <label for="exampleInputEmail1">Email address</label>
+    <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+  </div>
+  <div class="form-group">
+    <label for="exampleInputEmail1">Username</label>
+    <input type="email" class="form-control" name="username"  aria-describedby="emailHelp" placeholder="Enter username">
+    <small id="emailHelp" class="form-text text-muted">set a unique username</small>
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Password</label>
+    <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+  </div>
+  <div class="form-check">
+    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+  <a href="/register_successful" class="btn btn-primary">click to register</a>
+</form>
+            </div>
+            <div class="col-sm-0 col-md-4"></div>
+        </div>
+    
+</div>
+-->
+<h3>Add a person</h3>
+    <form action="/register" method="post">
+      <input type="text" name="email" placeholder="name">
+      <input type="text" name="username" placeholder="age">
+      <input type="text" name="psaaword" placeholder="city">
+      <input type="submit" placeholder="submit query">
+      
+    </form>
+
 </body>
 </html>

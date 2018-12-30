@@ -12,7 +12,7 @@ function createuser(){
     return new Promise(function(resolve,reject){
         connection.query(
             `CREATE TABLE IF NOT EXISTS users
-            (ID INTEGER PRIMARY KEY AUTO_INCREMENT,EMAIL VARCHAR(60),PASSWORD VARCHAR(60)
+            (ID INTEGER AUTO_INCREMENT PRIMARY KEY,EMAIL VARCHAR(60),USERNAME VARCHAR(60), PASSWORD VARCHAR(60))
             `
             ),
             function(err,rows){
@@ -27,18 +27,18 @@ function createuser(){
     })
 }
 
-function adduser(email,password){
+function adduser(email,username,password){
     return new Promise(function(resolve,reject){
         connection.query(
             `INSERT INTO users
-            (EMAIL,PASSWORD) 
-            VALUES(?,?,?)`,[email,password]),
-            function(err,rows,cols){
+            (EMAIL, USERNAME, PASSWORD) 
+            VALUES(?,?,?)`,[email, username, password]),
+            function(err,rows){
                 if(err){
                     reject(err);
                 }
                 else{
-                    resolve(rows);
+                    resolve();
                 }
             }
     })

@@ -11,28 +11,28 @@ var connection=mysql.createConnection({
 function createuser(){
     return new Promise(function(resolve,reject){
         connection.query(
-            `CREATE TABLE IF NOT EXISTS users
-            (ID INTEGER AUTO_INCREMENT PRIMARY KEY,EMAIL VARCHAR(60),USERNAME VARCHAR(60), PASSWORD VARCHAR(60))
+            `CREATE TABLE IF NOT EXISTS login
+            (ID INTEGER AUTO_INCREMENT PRIMARY KEY,EMAIL VARCHAR(60), PASSWORD VARCHAR(60))
             `
             ),
-            function(err,rows){
+            function(err,rows, col){
                 if(err)
                 {
                     reject(err);
                 }
                 else{
-                    resolve();
+                    resolve(col);
                 }
             }
     })
 }
 
-function adduser(email,username,password){
+function adduser(email, password){
     return new Promise(function(resolve,reject){
         connection.query(
-            `INSERT INTO users
-            (EMAIL, USERNAME, PASSWORD) 
-            VALUES(?,?,?)`,[email, username, password]),
+            `INSERT INTO login
+            (EMAIL, PASSWORD)
+            VALUES(?,?)`,[email, password]),
             function(err,rows){
                 if(err){
                     reject(err);
@@ -44,7 +44,65 @@ function adduser(email,username,password){
     })
 }
 
+function validateuser(email,password){
+    return new Promise(function(resolve, reject){
+        connection.query(
+            `SELECT * FROM login WHERE EMAIL = "${email}" AND PASSWORD = "${password}";
+            `,
+            function(err, rows, cols){
+                if(err){
+                    reject(err);
+                }
+                else{
+                    resolve(rows);
+                }
+            }
+
+        )
+    })
+}
+
+function viewtodo(tablename){
+    return new Promise(function(resolve,reject){
+        connection.query(
+            `SELECT TODOS FROM ${tablename};
+            `,
+            function(err,rows,cols){
+                if(err){
+                    reject(err);
+                }
+                else{
+                    resolve(rows);
+                }
+            }
+
+        )
+    })
+}
+
+function todotable(tablename){
+   // console.log(tablename);
+    return new Promise(function(resolve,reject){
+        connection.query(
+            `CREATE TABLE IF NOT EXISTS ${tablename}
+            (ID INTEGER AUTO_INCREMENT PRIMARY KEY,EMAIL VARCHAR(60), TODOS VARCHAR(1000))
+            `,
+            function(err, rows, cols){
+                if(err){
+                    reject(err);
+                }
+                else{
+                    resolve(cols);
+                }
+            }
+        )
+    })
+}
+
+
+
+
 exports=module.exports={
-    adduser,createuser
+    adduser,createuser,validateuser,todotable,viewtodo
 }
 

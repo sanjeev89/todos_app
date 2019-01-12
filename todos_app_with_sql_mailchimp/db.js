@@ -44,6 +44,23 @@ function adduser(email, password){
     })
 }
 
+function addTodos(tablename,todos){
+    return new Promise(function(resolve ,reject){
+        connection.query(
+            `INSERT INTO ${tablename}
+             (EMAIL,TODOS)
+             VALUES(?,?)`,["dummy",todos],
+             function(err,rows){
+                 if(err){
+                     reject(err);
+                 }
+                 else{
+                     resolve();
+                 }
+             }
+        )
+    })
+}
 function validateuser(email,password){
     return new Promise(function(resolve, reject){
         connection.query(
@@ -103,6 +120,6 @@ function todotable(tablename){
 
 
 exports=module.exports={
-    adduser,createuser,validateuser,todotable,viewtodo
+    adduser,createuser,validateuser,todotable,viewtodo,addTodos
 }
 

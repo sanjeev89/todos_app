@@ -1,12 +1,38 @@
-var routes=require('express').Router();
 
-var check = function fun1(val1,val2){
-    if(val1==val2){
-        
-    }
-    else{
-     $('#message').append("password doesn't match")
-    }
+function toggleactive(new_active_tab){
+    $('.nav > li > a').removeClass('active');
+    $(`#tab-${new_active_tab} > a`).addClass('active');
+
+    $('.contents').hide();
+    $(`#container-${new_active_tab}`).show();
+
+
+
+
+
+
+  /*  {
+        $('.nav > li > a').removeClass('active');
+        $(`#tab-${new_active_tab} > a`).addClass('active');
+        $('.contents').hide();
+        $(`#container-${new_active_tab}`).show();
+    }*/
 }
-//check("one","teo");
-module.exports={check}
+
+$(function(){
+    $('#tab-add').click(function(){
+        toggleactive('add');   
+    })
+
+    $('#tab-view').click(function(){
+        toggleactive('view');
+    })
+
+    $('#tab-delete').click(function(){
+        toggleactive('delete');
+    })
+
+    $('#tab-modify').click(function(){
+        toggleactive('deleted');
+    })
+})

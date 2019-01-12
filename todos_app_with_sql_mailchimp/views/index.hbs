@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,48 +8,54 @@
     <title>Document</title>
     <script src="assets/js/jquery.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="assets/css/bootstrap.css">
-    <script src="assets/js/bootstrap.js"  crossorigin="anonymous"></script>
+    <script src="assets/js/bootstrap.js" crossorigin="anonymous"></script>
 
 
 </head>
-<body>
-     <div class="container-fluid">
-            <div>
-                <div class="row" style="background-color:aqua;height:150px">
-                <p class="text-center" style="float:right">all todos here</p>
-                </div>
 
-                <div class="row">
-                    <div class="col-sm-0 col-md-4"></div>
-                    <div class="col-sm-12 col-md-4 p-2"> 
-                        <br>
-                            <img src="download.png" style="display:block;width:100px;height:100px;margin-left:200px" alt="">
-                        <br>
-                        <form method="POST" action="/">
-                            <div class="form-group">
-                              <label for="exampleInputEmail1">Email address</label>
-                              <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-                              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                            </div>
-                            <div class="form-group">
-                              <label for="exampleInputPassword1">Password</label>
-                              <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                              <p style="color:red">{{msg}}</p>
-                            </div>
-                            <div class="text-center">
-                            <button type="submit" class="btn btn-lg btn-success" style="width:250px">Submit</button> <br>
-                            </div>
-                            <br>
-                            <p class="text-center">or </p> 
-                         </form>
-                    </div>
-                    <div class="col-sm-0 col-md-4"></div>
-                </div>
-                <div style="text-align:center">
-                    <a href="/register" class="btn btn-lg btn-primary" style="width:250px">Register with us</a>
-                </div>
+<body>
+    <div class="container-fluid">
+        <div>
+            <div class="row" style="background-color:aqua;height:150px">
+                <p class="text-center" style="float:right">all todos here</p>
             </div>
-     </div>
+
+            <div class="row">
+                <div class="col-sm-0 col-md-4"></div>
+                <div class="col-sm-12 col-md-4 p-2">
+                    <br>
+                    <img src="download.png" style="display:block;width:100px;height:100px;margin-left:200px" alt="">
+                    <br>
+                    <form method="POST" action="/">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Email address</label>
+                            <input type="email" class="form-control" name="email" id="exampleInputEmail1"
+                                aria-describedby="emailHelp" placeholder="Enter email">
+                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                                else.</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Password</label>
+                            <input type="password" name="password" class="form-control" id="exampleInputPassword1"
+                                placeholder="Password">
+                            <p style="color:red">{{msg}}</p>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-lg btn-success" style="width:250px">Submit</button>
+                            <br>
+                        </div>
+                        <br>
+                        <p class="text-center">or </p>
+                    </form>
+                </div>
+                <div class="col-sm-0 col-md-4"></div>
+            </div>
+            <div style="text-align:center">
+                <a href="/register" class="btn btn-lg btn-primary" style="width:250px">Register with us</a>
+            </div>
+        </div>
+    </div>
 </body>
 <script src="myscript/script1.js"></script>
+
 </html>

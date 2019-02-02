@@ -2,6 +2,9 @@ var express = require("express");
 var server = express();
 var db = require("./db.js");
 var path = require("path");
+var route = require('./routes/routes.js')
+var date = require('./routes/date');
+var bodyParser = require('body-parser')
 
 //var insert=require('./routes/routes.js')
 server.use(express.json());
@@ -12,31 +15,28 @@ server.use(express.static("views/images"));
 server.set("view engine", "hbs");
 server.set("views", path.join(__dirname, "views"));
 
-server.get("/", function(req, res) {
-  db.createuser()
-    .then(function() {})
-    .catch(function(err) {
-      res.send(err);
-    });
-  res.render("index"); //to send first index file as a response
-});
+server.use('/', route);
+server.use('/register',route);
+server.use('/register_successful', route)
+var email;
 
 var tablename;
 var flag=0;
 server.post("/", function(req, res) {
+      email=req.body.email;
       db.validateuser(req.body.email,req.body.password)
-      .then(function(rows){
+      .then(function(rows){                                  //mtlb username ya password galat h
         if(Object.keys(rows).length!=1){      
           msg="wrong username or password ";
           res.render('index',{msg})
         }
-        else{
+        else{                                          //username and password shi h...proceed further
           console.log(rows)
          // res.send(rows)
          
           console.log(Object.keys(rows).length);
           console.log(rows[0].ID);
-          tablename="pass"+rows[0].ID;
+          tablename="todos";
     
           db.todotable(tablename)               //creates the table for particular user
           .then(function(){
@@ -46,19 +46,20 @@ server.post("/", function(req, res) {
             console.log(err);
           })
           //res.send(rows);
+          console.log("table created successfully!!!!")
+          console.log("req.body.email is" +req.body.email)
           
-          db.viewtodo(tablename)
+          db.viewtodo(req.body.email)
           .then(function(data){
             console.log(data);
             //res.render('todos',{data});
             console.log("hello world ..");
-            res.redirect(`/abc?table=${tablename}`);
+            res.redirect('/todos');
            
            // res.redirect(`/${tablename}`);
             todos=data;
           })
           .catch(function(err){
-            
             console.log(err);
           })
         }
@@ -76,10 +77,10 @@ server.post('/register', function(req,res){
 })
 */ 
 
-server.get(`/abc`,function(req, res){
+server.get(`/todos`,function(req, res){
      console.log(req.query)
      tablename=req.query.table;
-      db.viewtodo(tablename)
+      db.viewtodo(email)
       .then(function(data){
         res.render('todos',{data})
       })
@@ -88,51 +89,52 @@ server.get(`/abc`,function(req, res){
       })
 })
 
-server.post('/abc', function(req,res){
+server.post('/todos', function(req,res){
    tablename=req.query.table;
-   db.addTodos(tablename,req.body.data)
+   console.log(req.body.data);
+   console.log("date is "+date.date());
+   db.addTodos('todos', email, req.body.data, get_time()+"\t\t"+date.date())
    .then(function(){
 
    })
    .catch(function(err){
      console.log(err);
    })
-   res.redirect(`/abc?table=${tablename}`);
+   res.redirect('/todos');
    
 })
 
-server.get("/register", function(req, res) {
-  res.render("register");
-}); //jb user index.hbs waale register pe click krega tb ye chalega
+server.delete('/todos', function(req, res){
+  console.log(req.body.data);
+  console.log("data is "+req.body)
+  console.log('req.query is '+req.query);
+  console.log("fucked up ");
+  
+  //console.log("datum is "+datum);
+  var data = JSON.stringify(req.body);  //without this line i will see [object,object]....remember this
+  console.log(data);
+  var obj=JSON.parse(data);
+  console.log(obj);
+  console.log("here comes the main data "+obj.d);
+  db.deltodos(obj.d)
+  .then(function(){})
+  .catch(function(err){
+    console.log(err);
+  })
+  res.render('todos');
+})
 
-server.post("/register", function(req, res) {
-  console.log("before add user");
-  if (req.body.password != req.body.retypepassword) {
-    var obj = { msg: "password didntmatched " };
-    console.log(obj);
-    //res.send("hello");
-    res.render("register", { obj });
-  } else {
-    db.adduser(req.body.email, req.body.password)
-      .then(function() {
-        console.log("in then function");
-        // res.render('register_successful');
-        res.send("Hello");
 
-        //res.render('register_successful');
-      })
-      .catch(function(err) {
-        res.send(err);
-      });
-    //res.send("Hello")
-    res.render("register_successful");
-  }
-});
 
-server.get("/register_successful", function(req, res) {
-  res.render("register_successful");
-}); //works at url /regiter successful
+
 
 server.listen(2000, function() {
   console.log("server started at localhost://2000");
 });
+
+function get_time(){
+  var time = new Date();
+  console.log(time.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }));
+  return time.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+  console.log(time.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }));
+  }

@@ -44,12 +44,12 @@ function adduser(email, password){
     })
 }
 
-function addTodos(tablename,todos){
+function addTodos(tablename,email,todos,time){
     return new Promise(function(resolve ,reject){
         connection.query(
             `INSERT INTO ${tablename}
-             (EMAIL,TODOS)
-             VALUES(?,?)`,["dummy",todos],
+             (EMAIL,TODOS,TIME)
+             VALUES(?,?,?)`,[email,todos,time],
              function(err,rows){
                  if(err){
                      reject(err);
@@ -79,10 +79,11 @@ function validateuser(email,password){
     })
 }
 
-function viewtodo(tablename){
+function viewtodo(email){
     return new Promise(function(resolve,reject){
         connection.query(
-            `SELECT TODOS FROM ${tablename};
+            `SELECT * FROM todos
+             where EMAIL='${email}';
             `,
             function(err,rows,cols){
                 if(err){
@@ -97,12 +98,30 @@ function viewtodo(tablename){
     })
 }
 
+function deltodos(data){
+    return new Promise(function(resolve, reject){
+        connection.query(
+            `delete from todos
+             where ID='${data}';
+            `,
+            function(err,rows,cols){
+                if(err){
+                    reject(err);
+                }
+                else{
+                    resolve();
+                }
+            }
+        )
+    })
+}
+
 function todotable(tablename){
    // console.log(tablename);
     return new Promise(function(resolve,reject){
         connection.query(
             `CREATE TABLE IF NOT EXISTS ${tablename}
-            (ID INTEGER AUTO_INCREMENT PRIMARY KEY,EMAIL VARCHAR(60), TODOS VARCHAR(1000))
+            (ID INTEGER AUTO_INCREMENT PRIMARY KEY,EMAIL VARCHAR(60), TODOS VARCHAR(1000), TIME VARCHAR(100))
             `,
             function(err, rows, cols){
                 if(err){
@@ -120,6 +139,6 @@ function todotable(tablename){
 
 
 exports=module.exports={
-    adduser,createuser,validateuser,todotable,viewtodo,addTodos
+    adduser,createuser,validateuser,todotable,viewtodo,addTodos,deltodos
 }
 

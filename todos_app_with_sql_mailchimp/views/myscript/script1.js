@@ -19,6 +19,21 @@ function toggleactive(new_active_tab){
     }*/
 }
 
+
+function del(id){
+    console.log("ran with 1000km/hr ");
+    $.ajax({
+        url:'/todos',
+        type:'DELETE',
+        data:{d:id},
+        datatype:JSON,
+        success:function(){
+            console.log("won the race ");
+            window.location.reload();
+        }
+   })
+}
+
 $(function(){
     $('#tab-add').click(function(){
         toggleactive('add');   
@@ -35,4 +50,6 @@ $(function(){
     $('#tab-modify').click(function(){
         toggleactive('deleted');
     })
+   
+
 })

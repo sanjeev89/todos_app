@@ -10,30 +10,29 @@
     <script src="assets/js/bootstrap.js" crossorigin="anonymous"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
     <title>Document</title>
 </head>
 
 <body>   
     <br>
     <div class="container-fluid" style="background-color:rgb(41, 163, 219)">
-       <img src="download.png" style="display:block;width:50px;height:50px;margin-left:20px margin-bottom:100px;" alt="">
+       <img src="./images/download.png" style="display:block;width:50px;height:50px;margin-left:20px margin-bottom:100px;" alt="">
     </div>
     <br>
     <div class="container-fluid " style="width:700px;">
         <ul class="nav nav-tabs">
-            <li class="nav-item" id="tab-view">
+            <li class="nav-item" id="tab-view" style="cursor:pointer">
                 <a class="nav-link active"  >Todos</a>
             </li>
-            <li class="nav-item" id="tab-add">
+            <li class="nav-item" id="tab-add" style="cursor:pointer">
                 <a class="nav-link" >add</a>
             </li>
-            <li class="nav-item" id="tab-delete">
+            <li class="nav-item" id="tab-delete" style="cursor:pointer">
                 <a class="nav-link">delete todos</a>
             </li>
-            <li class="nav-item" id="tab-deleted">
-                <a class="nav-link disabled" >Disabled</a>
-            </li>
-            <li class="nav-item" style="margin-left:200px;">
+           
+            <li class="nav-item" style="margin-left:200px;" style="cursor:pointer">
                 <a class="nav-link " href="/"><img src="./images/logout.png" alt="" style="width:30px;height:30px;"></a>
             </li>
         </ul>
@@ -41,14 +40,16 @@
         <div class="container contents" id="container-view">
           <ul class="list-group"></ul>
         {{#each data as |todo|}}
-        <li class="list-group-item">{{todo.TODOS}}</li>
+        <li class="list-group-item">{{todo.TODOS}} <br>
+         <p style="color:grey;font-size:12px;margin-bottom:2px;"> {{todo.TIME}}</p>
+         </li>
         {{/each}}
         </ul>
         </div>
 
         <div class="container contents text-center" id="container-add" style="display:none;">
             <div class="row">
-                <form action="/abc?table=pass2" method="post" >
+                <form action="/todos" method="post" >
                 <textarea name="data" id="" placeholder="Enter your todo here " cols="100" rows="7"></textarea>
                 <br>
                 <button class="btn btn-lg btn-success m-3" style="width:250px">add todo</button>
@@ -57,16 +58,15 @@
         </div>  
 
         <div class="container contents" id="container-delete" style="display:none"> 
-              <ul class="list-group"></ul>
+              <ul class="list-group">
               {{#each data as |todo|}}
-              <li class="list-group-item">
-                  <input type="checkbox">
-                  {{todo.TODOS}}</li>
-               {{/each}}
-              </ul>
-              <div class="text-center m-3">
-              <button class="btn btn-danger text-center" style="width:250px;">delete</button>
-             </div>         
+            
+                <li class="list-group-item" name="todo">{{todo.TODOS}}  <br>
+                <p style="color:grey;font-size:12px;margin-bottom:2px;"> {{todo.TIME}}</p>
+                </li>
+                <button class="btn btn-danger del mt-2 mb-2" id="{{todo.ID}}" name="id" onclick="del({{todo.ID}})" style="width:100px;">delete</button>
+              {{/each}}
+              </ul>           
         </div>
 
         <div class="container contents" id="container-deleted"></div>
